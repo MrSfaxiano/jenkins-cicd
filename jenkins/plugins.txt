@@ -1,0 +1,34 @@
+# Core pipeline
+workflow-aggregator:latest
+pipeline-stage-view:latest
+pipeline-graph-view:latest
+
+# SCM
+git:latest
+github:latest
+github-branch-source:latest
+
+# Docker
+docker-workflow:latest
+docker-plugin:latest
+
+# Credentials & security
+credentials-binding:latest
+credentials:latest
+plain-credentials:latest
+
+# Notifications
+slack:latest
+email-ext:latest
+mailer:latest
+
+# Observability
+prometheus:latest
+
+# Utilities
+build-timeout:latest
+timestamper:latest
+ws-cleanup:latest
+ansicolor:latest
+junit:latest
+

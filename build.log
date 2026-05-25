@@ -1,0 +1,40 @@
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 328B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/jenkins/jenkins:lts-jdk17
+#2 DONE 1.2s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/4] FROM docker.io/jenkins/jenkins:lts-jdk17@sha256:cce1eeb79902722f3cf7a8831c41e95c39f4a42b9a2981959630cc66539b3c2d
+#4 resolve docker.io/jenkins/jenkins:lts-jdk17@sha256:cce1eeb79902722f3cf7a8831c41e95c39f4a42b9a2981959630cc66539b3c2d 0.1s done
+#4 DONE 0.1s
+
+#5 [internal] load build context
+#5 transferring context: 33B done
+#5 DONE 0.0s
+
+#6 [2/4] RUN groupadd -f docker && usermod -aG docker jenkins
+#6 CACHED
+
+#7 [3/4] COPY plugins.txt /usr/share/jenkins/ref/plugins.txt
+#7 CACHED
+
+#8 [4/4] RUN jenkins-plugin-cli --plugin-file /usr/share/jenkins/ref/plugins.txt
+#8 CACHED
+
+#9 exporting to image
+#9 exporting layers done
+#9 exporting manifest sha256:67b5dc66190c6edcae6e1ae2436711bb901ce945433da09965985e53701c2c83 done
+#9 exporting config sha256:05520168416bf5607dfdd46a0aba1bbc2d80803b666a5027edd3f290b55cdb03
+#9 exporting config sha256:05520168416bf5607dfdd46a0aba1bbc2d80803b666a5027edd3f290b55cdb03 done
+#9 exporting attestation manifest sha256:087ca179319c6ddd741d057f7d5cc25b586c98033c940256a4f3d7bdeaa64f18 0.0s done
+#9 exporting manifest list sha256:9f3e95a1246d0db5461b2600efb91eabe6fdd0ac86a5a3b586ff7aa1efb6390c 0.0s done
+#9 naming to docker.io/library/jenkins-custom:latest done
+#9 unpacking to docker.io/library/jenkins-custom:latest 0.0s done
+#9 DONE 0.1s

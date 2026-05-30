@@ -23,9 +23,9 @@ services:
     volumes:
       - jenkins_home:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
-    environment:
-      - DOCKER_HOST=tcp://dind:2376
-      - DOCKER_TLS_VERIFY=0
+  
+      
+
     networks:
       - cicd
     depends_on:
@@ -53,6 +53,7 @@ services:
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
       - prometheus_data:/prometheus
+      - ./prometheus/alerts.yml:/etc/prometheus/alerts.yml:ro
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'

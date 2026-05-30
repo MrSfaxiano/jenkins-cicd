@@ -1,0 +1,23 @@
+groups:
+  - name: jenkins
+    rules:
+
+      - alert: JenkinsHighBuildFailureRate
+        expr: |
+          rate(default_jenkins_builds_failed_build_count_total[1h]) /
+          (rate(default_jenkins_builds_failed_build_count_total[1h]) + rate(default_jenkins_builds_success_build_count_total[1h])) > 0.3
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Jenkins build failure rate is high"
+          description: "More than 30% of Jenkins builds have failed in the last hour."
+
+      - alert: JenkinsDown
+        expr: up{job="jenkins"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Jenkins is unreachable"
+          description: "Prometheus cannot scrape Jenkins metrics endpoint."

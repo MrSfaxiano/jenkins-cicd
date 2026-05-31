@@ -2,6 +2,11 @@
 
 A production-inspired CI/CD infrastructure stack built with Jenkins, Docker, Prometheus, and Grafana. Designed as a portfolio project demonstrating end-to-end DevOps practices.
 
+## Pipeline
+
+![Pipeline Success](assets/pipeline-success.png)
+*All 8 stages passing: Checkout SCM → Checkout → Lint → Test → Build → Scan → Push → Deploy*
+
 ## Architecture
 
 ```
@@ -11,8 +16,6 @@ Developer → GitHub → Jenkins Pipeline → Docker Hub → Staging
                           │
                        Grafana (Dashboards + Alerts)
 ```
-
-**Pipeline stages:** Checkout → Lint → Test → Build → Scan → Push → Deploy
 
 ## Stack
 
@@ -51,7 +54,7 @@ Then wait ~2 minutes for Jenkins to initialize.
 
 ## Post-Start Manual Steps
 
-After every fresh start, run these two commands:
+After every fresh start, run these commands:
 
 ```bash
 # Fix Docker socket permissions
@@ -72,13 +75,29 @@ docker cp /tmp/trivy jenkins:/usr/local/bin/trivy
 
 ## Jenkins Pipeline
 
-The pipeline is defined in the `flask-app` repo's `Jenkinsfile` and runs automatically on every push via GitHub webhook.
+The pipeline is defined in the `flask-app` repo's `Jenkinsfile` and triggers automatically on every push via GitHub webhook.
 
 ### Quality Gates
 
 - **Flake8** — fails on any PEP8 violation
 - **pytest + coverage** — fails if coverage drops below 70%
 - **Trivy** — scans built image for HIGH/CRITICAL CVEs, archives report as build artifact
+
+## Trivy Vulnerability Report
+
+![Trivy Artifact](assets/trivy-artifact.png)
+*Trivy report archived as a build artifact on every pipeline run*
+
+![Trivy Report](assets/trivy-report.png)
+*JSON report showing scanned image, CVEs found, and artifact metadata*
+
+## Grafana Dashboards
+
+![Grafana Dashboard](assets/grafana-dashboard-1.png)
+*Jenkins dashboard showing job queue duration, memory usage, successful builds, and deployment annotation (red dotted line)*
+
+![Grafana Dashboard 2](assets/grafana-dashboard-2.png)
+*Executor health, job duration trends, and queue metrics — deployment annotation visible across both panels*
 
 ## Prometheus Alerts
 
@@ -87,20 +106,15 @@ The pipeline is defined in the `flask-app` repo's `Jenkinsfile` and runs automat
 | JenkinsHighBuildFailureRate | >30% failure rate over 1h | warning |
 | JenkinsDown | Jenkins unreachable | critical |
 
-## Grafana
-
-- **Jenkins dashboard** (ID: 9964) — build duration, success rate, executor usage
-- **Deployment annotations** — vertical markers on every successful deploy
-
 ## Makefile Commands
 
 ```bash
-make up        # Start the full stack
-make down      # Stop all services
-make logs      # Tail all logs
+make up              # Start the full stack
+make down            # Stop all services
+make logs            # Tail all logs
 make logs s=jenkins  # Tail Jenkins logs only
-make ps        # Show running containers
-make clean     # Destroy everything including volumes
+make ps              # Show running containers
+make clean           # Destroy everything including volumes
 ```
 
 ## Known Limitations
